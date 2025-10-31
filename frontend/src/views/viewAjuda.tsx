@@ -25,7 +25,11 @@ const ViewAjuda = () => {
 
   return (
     <div className="view view--ajuda">
-      <Card title="Recursos" subtitle="Links úteis para acelerar sua operação">
+      <Card
+        variant="highlight"
+        title="Recursos"
+        subtitle="Links úteis para acelerar sua operação"
+      >
         <div className="actions">
           <Button variant="secondary" onClick={() => abrirDocs('https://docs.omrstudio.dev/base')}>
             Documento Base
@@ -36,7 +40,7 @@ const ViewAjuda = () => {
         </div>
       </Card>
 
-      <Card title="FAQ" subtitle="Perguntas frequentes">
+      <Card variant="muted" title="FAQ" subtitle="Perguntas frequentes">
         <ul className="faq">
           {faqs.map((item) => (
             <li key={item.question}>

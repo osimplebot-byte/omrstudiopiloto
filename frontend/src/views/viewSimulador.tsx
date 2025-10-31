@@ -4,7 +4,7 @@ import { DataTable } from '../components/ui/DataTable';
 import { Button } from '../components/ui/Button';
 import { omrLog } from '../utils/logger';
 
-interface DemoAluno {
+interface DemoAluno extends Record<string, unknown> {
   aluno: string;
   turma: string;
   taxaAcerto: number;
@@ -39,6 +39,26 @@ const ViewSimulador = () => {
   return (
     <div className="view view--simulador">
       <Card
+        variant="highlight"
+        title="Bem-vindo de volta!"
+        subtitle="Retome o fluxo de testes do atendente virtual para validar o comportamento das respostas."
+        actions={
+          <>
+            <Button onClick={() => handleFiltro('alto')}>Continuar checklist</Button>
+            <Button variant="ghost" onClick={() => handleFiltro('todos')}>Rever regras</Button>
+          </>
+        }
+      >
+        <p className="card__lead">Você parou na etapa “Configuração do prompt base”.</p>
+        <ul className="checklist">
+          <li className="checklist__item is-done">Dataset de demonstração carregado</li>
+          <li className="checklist__item is-done">Personas sincronizadas com Supabase</li>
+          <li className="checklist__item">Revisar parâmetros do nó Prompt Builder</li>
+        </ul>
+      </Card>
+
+      <Card
+        className="card--data"
         title="Test-Drive de dados"
         subtitle="Explore o comportamento da taxa de acerto em cenários fictícios"
         actions={

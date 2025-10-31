@@ -28,7 +28,11 @@ const ViewConexoes = () => {
 
   return (
     <div className="view view--conexoes">
-      <Card title="Integrações" subtitle="Configure tokens e credenciais de serviço">
+      <Card
+        variant="highlight"
+        title="Integrações"
+        subtitle="Configure tokens e credenciais de serviço"
+      >
         <ul className="token-list">
           {tokens.map((token) => (
             <li key={token.name}>
@@ -45,7 +49,11 @@ const ViewConexoes = () => {
         </ul>
       </Card>
 
-      <Card title="Webhooks" subtitle="Aponte seu N8N para os endpoints corretos">
+      <Card
+        variant="muted"
+        title="Webhooks"
+        subtitle="Aponte seu N8N para os endpoints corretos"
+      >
         <dl className="endpoints">
           <div>
             <dt>/api/dados/import</dt>

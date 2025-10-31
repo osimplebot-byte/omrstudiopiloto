@@ -11,12 +11,12 @@ export const Header = ({ title, subtitle }: HeaderProps) => {
 
   return (
     <header className="header">
-      <div>
-        <h1>{title}</h1>
-        {subtitle && <p>{subtitle}</p>}
+      <div className="header__titles">
+        <h1 className="header__title">{title}</h1>
+        {subtitle && <p className="header__subtitle">{subtitle}</p>}
       </div>
       <div className="header__actions">
-        <span className="header__env">Demo</span>
+        <span className="header__env">Ambiente demo</span>
         <Button variant="ghost" onClick={toggleTheme}>
           Tema: {theme === 'light' ? 'Claro' : 'Escuro'}
         </Button>
