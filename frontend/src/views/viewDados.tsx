@@ -5,7 +5,8 @@ import { DataTable } from '../components/ui/DataTable';
 import { useUpload } from '../hooks/useUpload';
 import { useMetrics } from '../hooks/useMetrics';
 import { useAppStore } from '../store/useAppStore';
-import { omrLog } from '../utils/logger';
+import { readFileAsBase64 } from '../utils/file';
+import { omrError, omrLog } from '../utils/logger';
 
 interface ImportRow {
   id: string;
@@ -27,10 +28,16 @@ const ViewDados = () => {
 
   const handleSend = async () => {
     if (!selectedFile) return;
-    const payload = { nomeArquivo: selectedFile.name, conteudo: 'base64::placeholder' };
-    omrLog(`enviando ${selectedFile.name}`, { context: 'FRONT' });
-    upload.mutate({ fileName: selectedFile.name, payload });
-    setSelectedFile(null);
+
+    try {
+      const conteudo = await readFileAsBase64(selectedFile);
+      const payload = { nomeArquivo: selectedFile.name, conteudo };
+      omrLog(`enviando ${selectedFile.name}`, { context: 'FRONT' });
+      upload.mutate({ fileName: selectedFile.name, payload });
+      setSelectedFile(null);
+    } catch (error) {
+      omrError('falha ao preparar arquivo para upload', error, { context: 'FRONT' });
+    }
   };
 
   return (
