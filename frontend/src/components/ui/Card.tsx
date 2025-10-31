@@ -1,17 +1,20 @@
 import { ReactNode } from 'react';
 import { clsx } from 'clsx';
 
+type CardVariant = 'default' | 'highlight' | 'muted';
+
 interface CardProps {
   title?: string;
   subtitle?: string;
   children: ReactNode;
   actions?: ReactNode;
   className?: string;
+  variant?: CardVariant;
 }
 
-export const Card = ({ title, subtitle, children, actions, className }: CardProps) => {
+export const Card = ({ title, subtitle, children, actions, className, variant = 'default' }: CardProps) => {
   return (
-    <section className={clsx('card', className)}>
+    <section className={clsx('card', variant !== 'default' && `card--${variant}`, className)}>
       {(title || actions) && (
         <header className="card__header">
           <div>

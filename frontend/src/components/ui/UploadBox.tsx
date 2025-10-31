@@ -19,14 +19,14 @@ export const UploadBox = ({ onFile, accept = '.csv,.xlsx' }: UploadBoxProps) => 
   return (
     <div className="upload-box">
       <input ref={inputRef} type="file" accept={accept} hidden onChange={handleSelect} />
-      <Button
-        type="button"
-        variant="secondary"
-        onClick={() => inputRef.current?.click()}
-      >
+      <div className="upload-box__content">
+        <strong className="upload-box__title">Faça upload da planilha oficial</strong>
+        <p className="upload-box__description">Arraste e solte aqui ou clique para escolher um arquivo .csv ou .xlsx</p>
+      </div>
+      <Button type="button" variant="secondary" onClick={() => inputRef.current?.click()}>
         Selecionar arquivo
       </Button>
-      <p className="upload-box__hint">Formato suportado: CSV ou Excel</p>
+      <p className="upload-box__hint">Tamanho máximo: 5 MB</p>
     </div>
   );
 };

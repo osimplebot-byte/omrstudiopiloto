@@ -4,7 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 
 export type ViewId = 'dados' | 'simulador' | 'conexoes' | 'ajuda';
 
-export interface ImportStatus {
+export interface ImportStatus extends Record<string, unknown> {
   id: string;
   fileName: string;
   receivedAt: string;
