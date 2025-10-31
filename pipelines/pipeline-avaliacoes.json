@@ -1,0 +1,59 @@
+{
+  "name": "pipeline-avaliacoes",
+  "nodes": [
+    {
+      "id": "webhook_upload",
+      "name": "Webhook Upload",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "path": "dados/import",
+        "options": {
+          "responseCode": 202
+        }
+      }
+    },
+    {
+      "id": "validate_schema",
+      "name": "Validate Schema",
+      "type": "n8n-nodes-base.function",
+      "parameters": {
+        "functionCode": "try {\n  // validar estrutura básica\n  return items;\n} catch (error) {\n  $input.first().json.error = 'schema_invalido';\n  return items;\n}"
+      }
+    },
+    {
+      "id": "call_supabase",
+      "name": "Supabase Upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.SUPABASE_URL}}/rest/v1/avaliacoes",
+        "method": "POST",
+        "options": {
+          "headers": {
+            "apikey": "={{$env.SUPABASE_SERVICE_ROLE_KEY}}",
+            "Content-Type": "application/json"
+          }
+        }
+      }
+    },
+    {
+      "id": "notify_slack",
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "channel": "#omr-alertas",
+        "message": "[OMR:N8N] pipeline-avaliacoes concluído"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Upload": {
+      "main": [[{"node": "Validate Schema", "type": "main", "index": 0}]]
+    },
+    "Validate Schema": {
+      "main": [[{"node": "Supabase Upsert", "type": "main", "index": 0}]]
+    },
+    "Supabase Upsert": {
+      "main": [[{"node": "Notify Slack", "type": "main", "index": 0}]]
+    }
+  }
+}
